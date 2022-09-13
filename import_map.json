@@ -1,0 +1,13 @@
+{
+  "imports": {
+    "$fresh/": "https://deno.land/x/fresh@1.0.2/",
+    "@shopify/hydrogen-ui-alpha": "https://unpkg.com/@shopify/hydrogen-ui-alpha@2022.7.2/dist/dev/index.js",
+    "preact": "https://esm.sh/preact@10.10.0",
+    "preact/": "https://esm.sh/preact@10.10.0/",
+    "preact-render-to-string": "https://esm.sh/preact-render-to-string@5.2.1?external=preact",
+    "preact/jsx-runtime": "https://cdn.skypack.dev/preact/jsx-runtime?dts",
+    "preact/jsx-dev-runtime": "https://cdn.skypack.dev/preact/jsx-dev-runtime?dts",
+    "react": "https://esm.sh/preact@10.10.6/compat",
+    "react/": "https://esm.sh/preact@10.10.0/"
+  }
+}
