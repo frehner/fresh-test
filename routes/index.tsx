@@ -1,10 +1,12 @@
 /** @jsx h */
-import { h } from "preact";
+import { Fragment, h } from "preact";
 // doesn't work, sadly. But in an ideal world, it would. See https://github.com/microsoft/TypeScript/issues/50629 for more info
 // @deno-types="https://unpkg.com/@shopify/hydrogen-ui-alpha@2022.7.2/dist/types/index.d.ts"
 //
 import { Image } from "@shopify/hydrogen-ui-alpha";
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { Head } from "$fresh/runtime.ts";
+import { client } from "../storefront-client.ts";
 
 const query = `
   {
@@ -36,15 +38,11 @@ const query = `
 export const handler: Handlers = {
   async GET(_, ctx) {
     const req = await fetch(
-      `https://hydrogen-preview.myshopify.com/api/2022-07/graphql.json`,
+      client.getStorefrontApiUrl(),
       {
         method: "POST",
         body: query,
-        headers: {
-          "X-Shopify-Storefront-Access-Token":
-            "3b580e70970c4528da70c98e097c2fa0",
-          "content-type": "application/graphql",
-        },
+        headers: client.getPublicTokenHeaders(),
       },
     );
 
@@ -58,16 +56,21 @@ export const handler: Handlers = {
 export default function Home({ data }: PageProps) {
   const imageData = data.data.products.nodes[0].variants.nodes[0].image;
   return (
-    <div>
-      <img
-        src="/logo.svg"
-        height="100px"
-        alt="the fresh logo: a sliced lemon dripping with juice"
-      />
-      <p>
-        Welcome to some "fresh" Hydrogen components.
-      </p>
-      <Image data={imageData} width={500} widths={[500]} />
-    </div>
+    <Fragment>
+      <Head>
+        <title>Fresh: Hydrogen</title>
+      </Head>
+      <div>
+        <img
+          src="/logo.svg"
+          height="100px"
+          alt="the fresh logo: a sliced lemon dripping with juice"
+        />
+        <p>
+          Welcome to some "fresh" Hydrogen components.
+        </p>
+        <Image data={imageData} width={500} widths={[500]} />
+      </div>
+    </Fragment>
   );
 }
